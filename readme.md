@@ -9,6 +9,13 @@ This is the example repository for the automated classification of the articles.
 ## How to run
 Run the followings:
 
+1. Download the repository
+    ```
+    cd "DIRECTORY NAME"
+    git clone git@github.com:k-nakam/classify_papers.git
+    ```
+
+2. Create the virtual environment and run application
     ```
     python -m venv .venv
     source .venv/bin/activate

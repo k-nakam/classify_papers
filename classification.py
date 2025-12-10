@@ -134,7 +134,7 @@ def run_pipeline(
         rows.append(row)
         sleep(sleep_sec)
 
-    # Convert list of dicts → DataFrame → CSV
+    # Convert list of dicts -> DataFrame -> CSV
     df = pd.DataFrame(rows)
     df.to_csv(output_csv, index=False)
     print(f"CSV saved to {output_csv}")
