@@ -6,7 +6,7 @@ from typing import Dict, Any, List
 
 from dotenv import load_dotenv
 from openai import OpenAI
-from pypdf import PdfReader
+import fitz
 import pandas as pd
 import argparse
 
@@ -16,28 +16,19 @@ client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 def extract_text_from_pdf(
     pdf_path: str,
-    max_pages_front: int = 6,
-    max_pages_back: int = 2,
-    max_chars: int = 20000,
+    max_chars: int = 120000,
 ) -> str:
-    reader = PdfReader(pdf_path)
-    n_pages = len(reader.pages)
 
-    pages_to_read = list(range(min(max_pages_front, n_pages)))
-    for j in range(max(0, n_pages - max_pages_back), n_pages):
-        if j not in pages_to_read:
-            pages_to_read.append(j)
+    doc = fitz.open(pdf_path)
+    chunks = []
 
-    texts = []
-    for idx in pages_to_read:
-        page = reader.pages[idx]
-        try:
-            page_text = page.extract_text() or ""
-        except Exception:
-            page_text = ""
-        texts.append(page_text)
+    for page in doc:
+        text = page.get_text("text")
+        if text:
+            chunks.append(text)
 
-    return "\n\n".join(texts)[:max_chars]
+    full_text = "\n\n".join(chunks)
+    return full_text[:max_chars]
 
 
 # ---------------------------------------------------------------------
@@ -64,7 +55,7 @@ SYSTEM_PROMPT = load_system_prompt()
 
 def extract_metadata_from_pdf(
     pdf_path: str,
-    model: str = "gpt-4.1-mini",
+    model: str = "gpt-5-mini",
 ) -> Dict[str, Any]:
 
     text = extract_text_from_pdf(pdf_path)
@@ -106,7 +97,7 @@ EXTRACTED TEXT:
 def run_pipeline(
     input_dir: str,
     output_csv: str,
-    model: str = "gpt-4.1-mini",
+    model: str = "gpt-5-mini",
     sleep_sec: float = 0.4,
 ):
     pdf_files = sorted(glob.glob(os.path.join(input_dir, "*.pdf")))

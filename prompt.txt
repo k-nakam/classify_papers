@@ -30,7 +30,8 @@ If information is not available or unclear, use:
     - Is at least one author from an Ivy League institution? 
     - 0 = No evidence 
     - 1 = Yes, at least one author clearly from an Ivy League school 
-    - 3 = Indeterminate (affiliations unclear or not shown) Ivy League: Brown, Columbia, Cornell, Dartmouth, Harvard, Penn, Princeton, Yale (and their main campuses).
+    - 3 = Indeterminate (affiliations unclear or not shown)
+    Ivy League: Brown, Columbia, Cornell, Dartmouth, Harvard, Penn, Princeton, Yale (and their main campuses).
 19. "includes_survey_experiment": integer 
     - Does the article include a survey experiment? 
     - 0 = No 
@@ -46,12 +47,11 @@ If information is not available or unclear, use:
     - Free text summary, e.g. "survey organization online panel", "MTurk", "university lab volunteers", "social media users", etc.
 22. "survey_modality": string or null 
     - Main modality, e.g. "internet", "phone", "mail", "in person", "mixed", "social media sampling", etc.
-23. "sample_size": integer or null 
-    - Main sample size (number of respondents) for the primary analysis.
-    - Extract from regression table or description of N =.
-24. "response_rate": number or null
+23. "sample_size": string
+    - Extract survey sample size. Extract sample size of all the surveys (e.g., N = 100 for wave 1, N = 50 for wave 2)
+24. "response_rate": string or null
     - Response rate as numeric percentage if provided, e.g. 35.6 for 35.6%.
-    - If several are given, choose the main or overall response rate.
+    - If several are given, list everything.
 25. "target_population": string or null - For NON-EXPERIMENTAL surveys: description, e.g. "adult US population", "women in Georgia", etc.
     - If only experimental, still describe target if given.
 26. "weighting_used": integer
@@ -89,7 +89,7 @@ If information is not available or unclear, use:
         - 1 = Yes, at least one validation measure
         - 3 = Unknown / not mentioned
         - 4 = "rapid questioning" or similar as explicit special validation strategy
-38. "completion_rate": number or null 
+38. "completion_rate": string or null 
     - Completion rate = number of respondents who complete survey / number who begin it.
     - As numeric percent, e.g. 80.5 for 80.5%.
 39. "screening_completion_rate": number or null
